@@ -42,7 +42,13 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>Internal repo</name>
+            <url>file:///C:/Jenkinshakim</url>
+        </repository>
+    </distributionManagement>
     <build>
         <plugins>
             <plugin>
