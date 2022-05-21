@@ -1,0 +1,882 @@
+https://reactnavigation.org/docs/4.x/navigation-prop/
+https://ui.dev/react-router-v5-preventing-transitions
+===================================================================
+
+As we know, React is a JavaScript-based library that does not have the ability to make HTTP requests; thus,
+we need to use third-party libraries to achieve this.
+There are plenty of libraries available to make HTTP calls into React app. A few of them are listed below.
+Axios
+Fetch
+Superagent
+React-axios
+Use-http
+React-request
+We will use the Axios HTTP library to make the REST API call in this example tutorial( Consume CRUD REST API Call)
+Using npx
+npx create-react-app react-frontend
+Using npm
+npm init react-app react-frontend
+npm init is available in npm 6+
+Using Yarn
+yarn create react-app react-frontend
+
+react-frontend
+├── README.md
+├── node_modules
+├── package.json
+├── .gitignore
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   └── robots.txt
+└── src
+    ├── App.css
+    ├── App.js
+    ├── App.test.js
+    ├── index.css
+    ├── index.js
+    ├── logo.svg
+    └── serviceWorker.js
+
+For the project to build, these files must exist with exact filenames:
+public/index.html is the page template;
+src/index.js is the JavaScript entry point.
+
+Let's quickly explore the project structure.
+
+package.json - The package.json file contains all the required dependencies for our React JS project.
+Most importantly, you can check the current version of React that you are using. It has all the scripts to start, build, and eject our React app.
+public folder - The public folder contains index.html.
+ As react is used to build a single page application, we have this single HTML file to render all our components.
+ Basically, it's an HTML template. It has a div element with id as root and all our components are rendered in this div with index.html as a single page for the complete react app.
+src folder- In this folder, we have all the global javascript and CSS files. All the different components that we will be building, sit here.
+index.js - This is the top renderer of your react app.
+node_modules - All the packages installed by NPM or Yarn will reside inside the node_modules folder.
+App.js - The App.js file contains the definition of our App component which actually gets rendered in the browser and this is the root component.
+
+================================================================
+
+Writing a SPA application using Spring Boot and React
+May 17, 2020
+
+In this post, it will be described a SPA application using Spring Boot and React. The application, ‘Supermarket Scheduler’,
+allows users to make appointments before going to the supermarket,
+ thus reducing crowd. There are 2 types of users:
+
+regular users, the clients of the supermarket; they can view supermarkets, available time slots, and make appointments
+manager users, the administrators; they can add new users (managers or regular), they can register supermarkets and time slots
+The application consists of 2 smaller applications:
+
+The backend application exposes a REST API for fulfilling the business logic. It allows authentication using JWT, authorization,
+ and all functionality is allowed based on user type.
+
+The application uses Spring Boot, Spring Data JPA, and a PostgreSQL database.
+
+The frontend application uses React. This application was created using the npx command. Next, to start a development server, just run npm start.
+
+In the end, this application will consist of a list of static files. In production, there will be an additional server (using node, or Nginx)
+to deliver the files.
+
+Of course, it would be possible to configure the Spring Boot app to serve the static files too; but I think that each component should
+do one thing and should do it well: the Spring Boot app offers the API,and some other server offers the static files.
+
+React intro
+React is used to build user interfaces (UI) on the front end.
+React is not a framework (unlike Angular, which is more opinionated). React is a JavaScript library.
+React is an open-source project created by Facebook.
+
+React is a Javascript library for building user interfaces running in the browser. It is a component-based framework.
+In order to use React, you can have a HTML page like this:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
+this .html file can be linked with the following code:
+const element = <h1>Hello, world</h1>;
+ReactDOM.render(element, document.getElementById('root'));
+
+The element constant is a component. In React, there are 2 types of components:
+function components
+state components
+
+An example of a function component:
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+An example of a class component:
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+One difference between function components and class components is that class components have state; class components have lifecycle methods as well.
+The components can be reused, and this is an aspect that gives React elegance:
+
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Welcome name="Sara" />
+      <Welcome name="Cahal" />
+      <Welcome name="Edite" />
+    </div>
+  );
+}
+ 
+Components can have state; once the state modifies, the affected parts are re-rendered; but not everything is re-rendered,
+only the elements affected by the change.
+ To figure out the parts needed to re-render after a property change, React uses a Virtual DOM.
+State can only travel from parent components to child components; but parent components can pass child components methods as well,
+ and a child component can call these methods to notify the parent when state changes.
+
+React uses ES6.
+More information about React, including official tutorials and guidelines, can be found here .
+
+React Router
+React is a library that allows the creation of SPA applications. By definition, SPA run in a single web page,
+ so the concept of URL links is irrelevant (at least in the classic sense).
+
+If you want to have links in your SPA application, that users can bookmark, or can click browser’s Back button to return from where they left,
+ you need to interact with an API provided by the browser.
+
+A useful library for doing this is React Router; using this library, different browser URL’s can point to different parts of your React application.
+
+Example:
+
+function LinksExample() {
+  return (
+    <Router>
+      <div>
+        <ul>
+          <li> <Link to="/">Home</Link> </li>
+          <li> <Link to="/about">About</Link> </li>
+          <li> <Link to="/dashboard">Dashboard</Link> </li>
+        </ul>
+        <Switch>
+          <Route exact path="/"> <Home /></Route>
+          <Route path="/about"><About /> </Route>
+          <Route path="/dashboard"> <Dashboard /></Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+function Home() {
+  return (
+    <div><h2>Home</h2></div>
+  );
+}
+
+function About() {
+  return (
+    <div><h2>About</h2></div>
+  );
+}
+
+function Dashboard() {
+  return (
+    <div> <h2>Dashboard</h2> </div>
+  );
+}
+
+Screenshots
+Home page for an not logged in user:
+Project structure
+Supermarket view for an not logged in user:
+Project structure
+Home page for an regular user:
+Project structure
+Supermarket view for an regular user:
+Project structure
+Appointments view for an regular user:
+Project structure
+Home page for an manager user:
+Project structure
+Supermarket view for an manager user (no time slots created yet for the viewed supermarket):
+Project structure
+
+Conclusion
+React is a framework that is fun to work with. It allows easy development of SPA applications.
+ It has a great community behind it, with many libraries and contributors.
+ =================================================================
+ how to build a CRUD full-stack application using React as frontend and Spring boot as backend. We will use the PostgreSQL database.
+ What is React JS?
+ React is used to build user interfaces (UI) on the front end.
+ React is not a framework (unlike Angular, which is more opinionated). React is a JavaScript library.
+ React is an open-source project created by Facebook.
+ What is Spring Boot?
+ Spring Boot is an opinionated framework that helps developers build Spring-based applications quickly and easily. The main goal of Spring Boot is to quickly create Spring-based applications without requiring developers to write the same boilerplate configuration again and again.
+ What is PostgreSQL?
+ PostgreSQL is an advanced, enterprise-class, and open-source relational database system. PostgreSQL supports both SQL (relational) and JSON (non-relational) querying.
+ What we will build?
+ We will build a basic Employee Management Application with CRUD features:
+ Create Employee
+ List Employee
+ Update Employee
+ Delete Employee
+ View Employee
+ Following is the screenshot of the final version of our application -
+
+ Prerequisites
+ There is a separate tutorial for building CRUD REST APIs using spring boot and PostgreSQL database - Spring Boot PostgreSQL CRUD Example tutorial.
+
+ In this tutorial, we will build a CRUD React application that consumes REST APIs exposed in Spring Boot PostgreSQL CRUD Example tutorial.
+
+ So before building a React application, make sure that your Spring boot application is up and running and all the five REST APIs working:
+
+ Build React JS CRUD Application
+ Let's go ahead and create a React application to consume CRUD REST APIs.
+ I suggest you watch a YouTube video tutorial series to understand more about this full-stack app at ReactJS + Spring Boot CRUD Full Stack Application
+ As we know, React is a JavaScript-based library that does not have the ability to make HTTP requests; thus, we need to use third-party libraries to achieve this.
+ There are plenty of libraries available to make HTTP calls into React app. A few of them are listed below.
+ Axios
+ Fetch
+ Superagent
+ React-axios
+ Use-http
+ React-request
+ We will use the Axios HTTP library to make the REST API call in this example tutorial.
+ Let's start with creating a React App using create-react-app CLI.
+ 1 - Create a React UI with Create React App
+ The Create React App CLI tool is an officially supported way to create single-page React applications. It offers a modern build setup with no configuration.
+ To create a new app, you may choose one of the following methods:
+ Using npx
+ npx create-react-app react-frontend
+ Using npm
+ npm init react-app react-frontend
+ npm init is available in npm 6+
+ Using Yarn
+ yarn create react-app react-frontend
+ Running any of these commands will create a directory called react-frontend inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
+ react-frontend
+ ├── README.md
+ ├── node_modules
+ ├── package.json
+ ├── .gitignore
+ ├── public
+ │   ├── favicon.ico
+ │   ├── index.html
+ │   ├── logo192.png
+ │   ├── logo512.png
+ │   ├── manifest.json
+ │   └── robots.txt
+ └── src
+     ├── App.css
+     ├── App.js
+     ├── App.test.js
+     ├── index.css
+     ├── index.js
+     ├── logo.svg
+     └── serviceWorker.js
+ Let's explore important files and folders of the react project.
+ For the project to build, these files must exist with exact filenames:
+ public/index.html is the page template;
+ src/index.js is the JavaScript entry point.
+ You can delete or rename the other files.
+
+ Let's quickly explore the project structure.
+
+ package.json - The package.json file contains all the required dependencies for our React JS project. Most importantly, you can check the current version of React that you are using. It has all the scripts to start, build, and eject our React app.
+ public folder - The public folder contains index.html. As react is used to build a single page application, we have this single HTML file to render all our components. Basically, it's an HTML template. It has a div element with id as root and all our components are rendered in this div with index.html as a single page for the complete react app.
+ src folder- In this folder, we have all the global javascript and CSS files. All the different components that we will be building, sit here.
+ index.js - This is the top renderer of your react app.
+ node_modules - All the packages installed by NPM or Yarn will reside inside the node_modules folder.
+ App.js - The App.js file contains the definition of our App component which actually gets rendered in the browser and this is the root component.
+ Understand more about creating React App at ReactJS + Spring Boot CRUD Full Stack App - 6 - Creating React App
+ 2 - React CRUD App Project Structure
+ Here is the final project structure of our React App:
+
+ 3 - Adding Bootstrap in React Using NPM
+ Open a new terminal window, navigate to your project's folder, and run the following command:
+ $ npm install bootstrap --save
+ After installing the bootstrap package, you will need to import it in your React app entry file.
+ Open the src/index.js file and add the following code:
+ import 'bootstrap/dist/css/bootstrap.min.css';
+ src/index.js
+ Here is the complete code for the index.js file:
+ import React from 'react';
+ import ReactDOM from 'react-dom';
+ import './index.css';
+ import App from './App';
+ import * as serviceWorker from './serviceWorker';
+ import 'bootstrap/dist/css/bootstrap.min.css';
+
+ ReactDOM.render(
+   <React.StrictMode>
+     <App />
+   </React.StrictMode>,
+   document.getElementById('root')
+ );
+
+ // If you want your app to work offline and load faster, you can change
+ // unregister() to register() below. Note this comes with some pitfalls.
+ // Learn more about service workers: https://bit.ly/CRA-PWA
+ serviceWorker.unregister();
+ Understand more about how to use bootstrap in react at ReactJS + Spring Boot CRUD Full Stack App - 7 - Add Bootstrap 4 in React App
+ 4 - EmployeeService - Consume CRUD REST API Call
+ For our API calls, we will be using Axios. Below is the npm command to install Axios.
+ npm add axios
+ EmployeeService.js
+ Let's create a services folder inside the src folder and create a Javascript file named EmployeeService.js.  Inside this file, create EmployeeService class with the following methods to make our HTTP REST call via Axios:
+ import axios from 'axios';
+
+ const EMPLOYEE_API_BASE_URL = "http://localhost:8080/api/v1/employees";
+
+ class EmployeeService {
+
+     getEmployees(){
+         return axios.get(EMPLOYEE_API_BASE_URL);
+     }
+
+     createEmployee(employee){
+         return axios.post(EMPLOYEE_API_BASE_URL, employee);
+     }
+
+     getEmployeeById(employeeId){
+         return axios.get(EMPLOYEE_API_BASE_URL + '/' + employeeId);
+     }
+
+     updateEmployee(employee, employeeId){
+         return axios.put(EMPLOYEE_API_BASE_URL + '/' + employeeId, employee);
+     }
+
+     deleteEmployee(employeeId){
+         return axios.delete(EMPLOYEE_API_BASE_URL + '/' + employeeId);
+     }
+ }
+
+ export default new EmployeeService()
+ Make sure that you create an object of EmployeService class export it as:
+ export default new EmployeeService();
+ Understand more about EmployeeService at ReactJS + Spring Boot CRUD Full Stack Application
+ 5 - package.json
+ This file contains all the required dependencies for our React JS project. Most importantly, you can check the current version of React that you are using. It has all the scripts to start, build, and eject our React app:
+ {
+   "name": "react-frontend",
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
+     "@testing-library/jest-dom": "^4.2.4",
+     "@testing-library/react": "^9.5.0",
+     "@testing-library/user-event": "^7.2.1",
+     "axios": "^0.19.2",
+     "bootstrap": "^4.5.0",
+     "react": "^16.13.1",
+     "react-dom": "^16.13.1",
+     "react-router-dom": "^5.2.0",
+     "react-scripts": "3.4.1"
+   },
+   "scripts": {
+     "start": "react-scripts start",
+     "build": "react-scripts build",
+     "test": "react-scripts test",
+     "eject": "react-scripts eject"
+   },
+   "eslintConfig": {
+     "extends": "react-app"
+   },
+   "browserslist": {
+     "production": [
+       ">0.2%",
+       "not dead",
+       "not op_mini all"
+     ],
+     "development": [
+       "last 1 chrome version",
+       "last 1 firefox version",
+       "last 1 safari version"
+     ]
+   }
+ }
+ 6 - React List Employee Component
+ In this section, we will create a new folder called components inside the src folder. Then create a new file called ListEmployeeComponent.js.
+ Within this file create a React class component named ListEmployeeComponent with the following content:
+ import React, { Component } from 'react'
+ import EmployeeService from '../services/EmployeeService'
+
+ class ListEmployeeComponent extends Component {
+     constructor(props) {
+         super(props)
+
+         this.state = {
+                 employees: []
+         }
+         this.addEmployee = this.addEmployee.bind(this);
+         this.editEmployee = this.editEmployee.bind(this);
+         this.deleteEmployee = this.deleteEmployee.bind(this);
+     }
+
+     deleteEmployee(id){
+         EmployeeService.deleteEmployee(id).then( res => {
+             this.setState({employees: this.state.employees.filter(employee => employee.id !== id)});
+         });
+     }
+     viewEmployee(id){
+         this.props.history.push(`/view-employee/${id}`);
+     }
+     editEmployee(id){
+         this.props.history.push(`/add-employee/${id}`);
+     }
+
+     componentDidMount(){
+         EmployeeService.getEmployees().then((res) => {
+             this.setState({ employees: res.data});
+         });
+     }
+
+     addEmployee(){
+         this.props.history.push('/add-employee/_add');
+     }
+
+     render() {
+         return (
+             <div>
+                  <h2 className="text-center">Employees List</h2>
+                  <div className = "row">
+                     <button className="btn btn-primary" onClick={this.addEmployee}> Add Employee</button>
+                  </div>
+                  <br></br>
+                  <div className = "row">
+                         <table className = "table table-striped table-bordered">
+
+                             <thead>
+                                 <tr>
+                                     <th> Employee First Name</th>
+                                     <th> Employee Last Name</th>
+                                     <th> Employee Email Id</th>
+                                     <th> Actions</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 {
+                                     this.state.employees.map(
+                                         employee =>
+                                         <tr key = {employee.id}>
+                                              <td> { employee.firstName} </td>
+                                              <td> {employee.lastName}</td>
+                                              <td> {employee.emailId}</td>
+                                              <td>
+                                                  <button onClick={ () => this.editEmployee(employee.id)} className="btn btn-info">Update </button>
+                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteEmployee(employee.id)} className="btn btn-danger">Delete </button>
+                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.viewEmployee(employee.id)} className="btn btn-info">View </button>
+                                              </td>
+                                         </tr>
+                                     )
+                                 }
+                             </tbody>
+                         </table>
+
+                  </div>
+
+             </div>
+         )
+     }
+ }
+
+ export default ListEmployeeComponent
+ Let's understand the above code.
+ The componentDidMount() is executed when the component is mounted for the first time. In the implementation, it actually invokes the service class method to fetch the employees from an API call and populates the state variable employees:
+     componentDidMount(){
+         EmployeeService.getEmployees().then((res) => {
+             this.setState({ employees: res.data});
+         });
+     }
+ We are using the ES6 feature that is a map operator to loop over our employees list and create the view:
+ <tbody>
+                                 {
+                                     this.state.employees.map(
+                                         employee =>
+                                         <tr key = {employee.id}>
+                                              <td> { employee.firstName} </td>
+                                              <td> {employee.lastName}</td>
+                                              <td> {employee.emailId}</td>
+                                              <td>
+                                                  <button onClick={ () => this.editEmployee(employee.id)} className="btn btn-info">Update </button>
+                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteEmployee(employee.id)} className="btn btn-danger">Delete </button>
+                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.viewEmployee(employee.id)} className="btn btn-info">View </button>
+                                              </td>
+                                         </tr>
+                                     )
+                                 }
+                             </tbody>
+ The constructor() is invoked before the component is mounted. In the constructor, we have declared our state variables and bind the different methods so that they are accessible from the state inside of the render() method.
+     constructor(props) {
+         super(props)
+
+         this.state = {
+                 employees: []
+         }
+         this.addEmployee = this.addEmployee.bind(this);
+         this.editEmployee = this.editEmployee.bind(this);
+         this.deleteEmployee = this.deleteEmployee.bind(this);
+     }
+ On the click of the Delete button, we use the filter() method of an array to filter out the deleted employee:
+     deleteEmployee(id){
+         EmployeeService.deleteEmployee(id).then( res => {
+             this.setState({employees: this.state.employees.filter(employee => employee.id !== id)});
+         });
+     }
+ With the click of the Update button, we will navigate to the Update Employee page using the following code:
+     editEmployee(id){
+         this.props.history.push(`/add-employee/${id}`);
+     }
+ With the click of the View button, we will navigate to the View Employee page using the following code:
+     viewEmployee(id){
+         this.props.history.push(`/view-employee/${id}`);
+     }
+ With the click of the Add Employee button, we will navigate to Add Employee page using the following code:
+    addEmployee(){
+         this.props.history.push('/add-employee/_add');
+     }
+ Understand more about ListEmployeeComponent at ReactJS + Spring Boot CRUD Full Stack App - 8 - Creating React List Employee Component
+ 7 - Create Header and Footer
+ 7.1 HeaderComponent
+ Let's create a new file named HeaderComponent.js and within this file, create a component named HeaderComponent with the following code:
+ import React, { Component } from 'react'
+
+ class HeaderComponent extends Component {
+     constructor(props) {
+         super(props)
+
+         this.state = {
+
+         }
+     }
+
+     render() {
+         return (
+             <div>
+                 <header>
+                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+                     <div><a href="https://javaguides.net" className="navbar-brand">Employee Management App</a></div>
+                     </nav>
+                 </header>
+             </div>
+         )
+     }
+ }
+
+ export default HeaderComponent
+ 7.2 FooterComponent
+ Let's create a new file named FooterComponent.js and within this file, create a component named FooterComponent with the following code:
+ import React, { Component } from 'react'
+
+ class FooterComponent extends Component {
+     constructor(props) {
+         super(props)
+
+         this.state = {
+
+         }
+     }
+
+     render() {
+         return (
+             <div>
+                 <footer className = "footer">
+                     <span className="text-muted">All Rights Reserved 2020 @JavaGuides</span>
+                 </footer>
+             </div>
+         )
+     }
+ }
+
+ export default FooterComponent
+ Understand more about creating Header and Footer in React app at ReactJS + Spring Boot CRUD Full Stack App - 10 - Add Header and Footer to React App
+ 8 - Configure React App Routing
+ To use React Router, you first have to install it using NPM:
+ npm install react-router-dom
+ You'll need to import BrowserRouter, Route, and Switch from the react-router-dom package:
+ import React, { Component } from 'react';
+ import { BrowserRouter, Route, Switch } from 'react-router-dom';
+ Let's open the App component and configure routing. We use the Switch element (open and closing tags) these ensure that only one component is rendered at a time.
+ Replace the App component with the following code:
+ import React from 'react';
+ import logo from './logo.svg';
+ import './App.css';
+ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+ import ListEmployeeComponent from './components/ListEmployeeComponent';
+ import HeaderComponent from './components/HeaderComponent';
+ import FooterComponent from './components/FooterComponent';
+ import CreateEmployeeComponent from './components/CreateEmployeeComponent';
+ import ViewEmployeeComponent from './components/ViewEmployeeComponent';
+
+ function App() {
+   return (
+     <div>
+         <Router>
+               <HeaderComponent />
+                 <div className="container">
+                     <Switch>
+                           <Route path = "/" exact component = {ListEmployeeComponent}></Route>
+                           <Route path = "/employees" component = {ListEmployeeComponent}></Route>
+                           <Route path = "/add-employee/:id" component = {CreateEmployeeComponent}></Route>
+                           <Route path = "/view-employee/:id" component = {ViewEmployeeComponent}></Route>
+                           {/* <Route path = "/update-employee/:id" component = {UpdateEmployeeComponent}></Route> */}
+                     </Switch>
+                 </div>
+               <FooterComponent />
+         </Router>
+     </div>
+
+   );
+ }
+
+ export default App;
+ Understand more above routing configuration at ReactJS + Spring Boot CRUD Full Stack App - 11 - Configure Routing
+ 9 - Add and Update Employee Component
+ In this section, we will implement Add employee and update employee functionality. We will use the same React Component to perform both add and update employee operations.
+ Let's create a new file called CreateEmployeeComponent.jsx. Within this file create a React class component named CreateEmployeeComponent with the following content:
+ import React, { Component } from 'react'
+ import EmployeeService from '../services/EmployeeService';
+
+ class CreateEmployeeComponent extends Component {
+     constructor(props) {
+         super(props)
+
+         this.state = {
+             // step 2
+             id: this.props.match.params.id,
+             firstName: '',
+             lastName: '',
+             emailId: ''
+         }
+         this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
+         this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+         this.saveOrUpdateEmployee = this.saveOrUpdateEmployee.bind(this);
+     }
+
+     // step 3
+     componentDidMount(){
+
+         // step 4
+         if(this.state.id === '_add'){
+             return
+         }else{
+             EmployeeService.getEmployeeById(this.state.id).then( (res) =>{
+                 let employee = res.data;
+                 this.setState({firstName: employee.firstName,
+                     lastName: employee.lastName,
+                     emailId : employee.emailId
+                 });
+             });
+         }
+     }
+     saveOrUpdateEmployee = (e) => {
+         e.preventDefault();
+         let employee = {firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId};
+         console.log('employee => ' + JSON.stringify(employee));
+
+         // step 5
+         if(this.state.id === '_add'){
+             EmployeeService.createEmployee(employee).then(res =>{
+                 this.props.history.push('/employees');
+             });
+         }else{
+             EmployeeService.updateEmployee(employee, this.state.id).then( res => {
+                 this.props.history.push('/employees');
+             });
+         }
+     }
+
+     changeFirstNameHandler= (event) => {
+         this.setState({firstName: event.target.value});
+     }
+
+     changeLastNameHandler= (event) => {
+         this.setState({lastName: event.target.value});
+     }
+
+     changeEmailHandler= (event) => {
+         this.setState({emailId: event.target.value});
+     }
+
+     cancel(){
+         this.props.history.push('/employees');
+     }
+
+     getTitle(){
+         if(this.state.id === '_add'){
+             return <h3 className="text-center">Add Employee</h3>
+         }else{
+             return <h3 className="text-center">Update Employee</h3>
+         }
+     }
+     render() {
+         return (
+             <div>
+                 <br></br>
+                    <div className = "container">
+                         <div className = "row">
+                             <div className = "card col-md-6 offset-md-3 offset-md-3">
+                                 {
+                                     this.getTitle()
+                                 }
+                                 <div className = "card-body">
+                                     <form>
+                                         <div className = "form-group">
+                                             <label> First Name: </label>
+                                             <input placeholder="First Name" name="firstName" className="form-control"
+                                                 value={this.state.firstName} onChange={this.changeFirstNameHandler}/>
+                                         </div>
+                                         <div className = "form-group">
+                                             <label> Last Name: </label>
+                                             <input placeholder="Last Name" name="lastName" className="form-control"
+                                                 value={this.state.lastName} onChange={this.changeLastNameHandler}/>
+                                         </div>
+                                         <div className = "form-group">
+                                             <label> Email Id: </label>
+                                             <input placeholder="Email Address" name="emailId" className="form-control"
+                                                 value={this.state.emailId} onChange={this.changeEmailHandler}/>
+                                         </div>
+
+                                         <button className="btn btn-success" onClick={this.saveOrUpdateEmployee}>Save</button>
+                                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
+                                     </form>
+                                 </div>
+                             </div>
+                         </div>
+
+                    </div>
+             </div>
+         )
+     }
+ }
+
+ export default CreateEmployeeComponent
+ Let's understand the above code.
+ We retrieve employee id from the route using the following line of code:
+ this.props.match.params.id
+ In the constructor, we have declared our state variables and bind the different methods so that they are accessible from the state inside of the render() method.
+ constructor(props) {
+         super(props)
+
+         this.state = {
+             // step 2
+             id: this.props.match.params.id,
+             firstName: '',
+             lastName: '',
+             emailId: ''
+         }
+         this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
+         this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+         this.saveOrUpdateEmployee = this.saveOrUpdateEmployee.bind(this);
+     }
+ The componentDidMount() is executed when the component is mounted for the first time. In componentDidMount() method, if the id is '_add' then we don't do anything else we retrieve employee by id using EmployeeService.getEmployeeById() method:
+     componentDidMount(){
+
+         // step 4
+         if(this.state.id === '_add'){
+             return
+         }else{
+             EmployeeService.getEmployeeById(this.state.id).then( (res) =>{
+                 let employee = res.data;
+                 this.setState({firstName: employee.firstName,
+                     lastName: employee.lastName,
+                     emailId : employee.emailId
+                 });
+             });
+         }
+     }
+ In the saveOrUpdateEmployee () method, we check if the id is _add then we call EmployeeService.createEmployee() method which internally makes a REST API call to store employee data into MySQL database. If id is any positive number then we call EmployeeService.updateEmployee() method which internally makes a REST API call to store updated employee data into MySQL database:
+ saveOrUpdateEmployee = (e) => {
+         e.preventDefault();
+         let employee = {firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId};
+         console.log('employee => ' + JSON.stringify(employee));
+
+         // step 5
+         if(this.state.id === '_add'){
+             EmployeeService.createEmployee(employee).then(res =>{
+                 this.props.history.push('/employees');
+             });
+         }else{
+             EmployeeService.updateEmployee(employee, this.state.id).then( res => {
+                 this.props.history.push('/employees');
+             });
+         }
+     }
+ We are using a getTitle() method to get the title for Add and Employee page based on id:
+ getTitle(){
+         if(this.state.id === '_add'){
+             return <h3 className="text-center">Add Employee</h3>
+         }else{
+             return <h3 className="text-center">Update Employee</h3>
+         }
+     }
+ On click on the Cancel button, the cancel() method is called and it will navigate the user to the employees list page:
+  cancel(){
+         this.props.history.push('/employees');
+     }
+ Understand more about CreateEmployeeConponent at ReactJS + Spring Boot CRUD Full Stack App - 13 - Creating React Add Employee Component.
+ 10 - View Employee Component
+ Let's create a new file called ViewEmployeeComponent.jsx. Within this file create a React class component named ViewEmployeeComponent with the following content:
+ import React, { Component } from 'react'
+ import EmployeeService from '../services/EmployeeService'
+
+ class ViewEmployeeComponent extends Component {
+     constructor(props) {
+         super(props)
+
+         this.state = {
+             id: this.props.match.params.id,
+             employee: {}
+         }
+     }
+
+     componentDidMount(){
+         EmployeeService.getEmployeeById(this.state.id).then( res => {
+             this.setState({employee: res.data});
+         })
+     }
+
+     render() {
+         return (
+             <div>
+                 <br></br>
+                 <div className = "card col-md-6 offset-md-3">
+                     <h3 className = "text-center"> View Employee Details</h3>
+                     <div className = "card-body">
+                         <div className = "row">
+                             <label> Employee First Name: </label>
+                             <div> { this.state.employee.firstName }</div>
+                         </div>
+                         <div className = "row">
+                             <label> Employee Last Name: </label>
+                             <div> { this.state.employee.lastName }</div>
+                         </div>
+                         <div className = "row">
+                             <label> Employee Email ID: </label>
+                             <div> { this.state.employee.emailId }</div>
+                         </div>
+                     </div>
+
+                 </div>
+             </div>
+         )
+     }
+ }
+
+ export default ViewEmployeeComponent
+ Understand more about ViewEmployeeConponent at ReactJS + Spring Boot CRUD Full Stack App - 13 - Creating React Add Employee Component.
+ 11 - Run React App
+ Before running React App, make sure that your Spring boot project is up and running.
+
+ Use the below command to start the project:
+ npm start
+ Use yarn to start the project:
+ yarn start
+ Runs the app in development mode. Open http://localhost:3000 to view it in the browser.
+ ==============================================================================================
